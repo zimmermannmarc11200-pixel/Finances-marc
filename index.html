@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0"/>
+<meta name="theme-color" content="#f7931a">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<title>💰 Mes Finances</title>
+<style>
+:root{--bg:#0f1117;--card:#1a1d27;--card2:#21253a;--acc:#f7931a;--grn:#22c55e;--blu:#3b82f6;--pur:#a855f7;--red:#ef4444;--txt:#f1f5f9;--mut:#94a3b8;--brd:#2e3347;--r:16px}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--txt);font-family:'Segoe UI',system-ui,sans-serif;padding-bottom:40px}
+header{background:#1a1d27;padding:20px 16px 16px;border-bottom:1px solid var(--brd);position:sticky;top:0;z-index:100}
+header h1{font-size:1.2rem;font-weight:700}
+header p{font-size:.78rem;color:var(--mut);margin-top:2px}
+.ws{display:flex;align-items:center;gap:10px;margin-top:12px}
+.ws label{font-size:.8rem;color:var(--mut);white-space:nowrap}
+.ws input[type=date]{background:var(--card2);border:1px solid var(--brd);color:var(--txt);border-radius:10px;padding:7px 10px;font-size:.85rem;flex:1;outline:none}
+.btn-today{background:var(--acc);color:#000;border:none;border-radius:10px;padding:8px 14px;font-size:.8rem;font-weight:700;cursor:pointer}
+.banner{margin:16px;background:linear-gradient(135deg,#1e2235,#252a40);border:1px solid var(--brd);border-radius:var(--r);padding:18px;text-align:center}
+.banner .lbl{font-size:.8rem;color:var(--mut);text-transform:uppercase;letter-spacing:1px}
+.banner .amt{font-size:2.4rem;font-weight:800;background:linear-gradient(90deg,#f7931a,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:4px 0}
+.banner .chg{font-size:.85rem}
+.pos{color:var(--grn)}.neg{color:var(--red)}
+.cs{padding:0 16px;margin-bottom:16px}
+.ct{font-size:.75rem;text-transform:uppercase;letter-spacing:1.2px;color:var(--mut);margin-bottom:10px}
+.bc{display:flex;flex-direction:column;gap:8px}
+.br{display:flex;align-items:center;gap:10px}
+.bl{font-size:.75rem;color:var(--mut);width:72px;text-align:right;flex-shrink:0}
+.bt{flex:1;background:var(--card2);border-radius:6px;height:22px;overflow:hidden}
+.bf{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:8px;font-size:.7rem;font-weight:700;color:#000;transition:width .5s ease}
+.bf.btc{background:var(--acc)}.bf.rev{background:var(--blu);color:#fff}.bf.cou{background:var(--grn)}.bf.liv{background:var(--pur);color:#fff}
+.st{padding:0 16px;margin-bottom:10px;font-size:.75rem;text-transform:uppercase;letter-spacing:1.2px;color:var(--mut)}
+.ag{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 16px;margin-bottom:16px}
+.ac{background:var(--card);border:1px solid var(--brd);border-radius:var(--r);padding:16px 14px;position:relative;overflow:hidden}
+.ac::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r) var(--r) 0 0}
+.ac.btc::before{background:var(--acc)}.ac.rev::before{background:var(--blu)}.ac.cou::before{background:var(--grn)}.ac.liv::before{background:var(--pur)}
+.ai{font-size:1.6rem;margin-bottom:6px;display:block}
+.an{font-size:.75rem;color:var(--mut);margin-bottom:4px}
+.aa{font-size:1.15rem;font-weight:700;word-break:break-all}
+.aa.ac1{color:var(--acc)}.aa.ac2{color:var(--blu)}.aa.ac3{color:var(--grn)}.aa.ac4{color:var(--pur)}
+.ap{font-size:.72rem;color:var(--mut);margin-top:3px}
+.ep{background:var(--card);border:1px solid var(--brd);border-radius:var(--r);margin:0 16px 16px;padding:18px}
+.ep h3{font-size:.95rem;font-weight:700;margin-bottom:14px}
+.ir{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.ig{display:flex;flex-direction:column;gap:5px}
+.ig label{font-size:.75rem;color:var(--mut)}
+.ig input{background:var(--card2);border:1px solid var(--brd);color:var(--txt);border-radius:10px;padding:10px 12px;font-size:.9rem;outline:none;width:100%}
+.ig input:focus{border-color:var(--acc)}
+.ig.full{grid-column:1/-1}
+.btn-sv{width:100%;padding:13px;background:linear-gradient(135deg,var(--acc),#e8830f);color:#000;font-weight:800;font-size:.95rem;border:none;border-radius:12px;cursor:pointer;margin-top:4px}
+.hs{padding:0 16px}
+.hh{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.hh h3{font-size:.75rem;text-transform:uppercase;letter-spacing:1.2px;color:var(--mut)}
+.btn-cl{background:none;border:1px solid var(--brd);color:var(--mut);border-radius:8px;padding:5px 10px;font-size:.72rem;cursor:pointer}
+.hl{display:flex;flex-direction:column;gap:8px}
+.hi{background:var(--card);border:1px solid var(--brd);border-radius:12px;padding:12px 14px}
+.hw{font-size:.72rem;color:var(--mut);margin-bottom:4px}
+.ht{font-size:1rem;font-weight:700;margin-bottom:6px}
+.htg{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:.65rem;padding:3px 7px;border-radius:6px;font-weight:600}
+.tag.btc{background:rgba(247,147,26,.15);color:var(--acc)}
+.tag.rev{background:rgba(59,130,246,.15);color:var(--blu)}
+.tag.cou{background:rgba(34,197,94,.15);color:var(--grn)}
+.tag.liv{background:rgba(168,85,247,.15);color:var(--pur)}
+.es{text-align:center;padding:30px 20px;color:var(--mut);font-size:.85rem}
+.es span{font-size:2rem;display:block;margin-bottom:8px}
+.div{height:1px;background:var(--brd);margin:16px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--grn);color:#000;font-weight:700;padding:12px 24px;border-radius:12px;font-size:.9rem;opacity:0;transition:opacity .3s;z-index:999;pointer-events:none}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+<header>
+  <h1>💰 Mes Finances</h1>
+  <p id="hd">Semaine en cours</p>
+  <div class="ws">
+    <label>Semaine du</label>
+    <input type="date" id="wd"/>
+    <button class="btn-today" onclick="setToday()">Aujourd'hui</button>
+  </div>
+</header>
+
+<div class="banner" style="margin-top:16px">
+  <div class="lbl">Patrimoine total</div>
+  <div class="amt" id="ta">0,00 €</div>
+  <div class="chg" id="tc">—</div>
+</div>
+
+<div class="cs">
+  <div class="ct">📊 Répartition</div>
+  <div class="bc" id="bc"></div>
+</div>
+
+<div class="div"></div>
+<div class="st">Mes comptes</div>
+<div class="ag">
+  <div class="ac btc"><span class="ai">₿</span><div class="an">Bitstack</div><div class="aa ac1" id="db">0,00 €</div><div class="ap" id="pb">—</div></div>
+  <div class="ac rev"><span class="ai">💳</span><div class="an">Revolut</div><div class="aa ac2" id="dr">0,00 €</div><div class="ap" id="pr">—</div></div>
+  <div class="ac cou"><span class="ai">🏦</span><div class="an">Compte courant</div><div class="aa ac3" id="dc">0,00 €</div><div class="ap" id="pc">—</div></div>
+  <div class="ac liv"><span class="ai">📗</span><div class="an">Livret A</div><div class="aa ac4" id="dl">0,00 €</div><div class="ap" id="pl">—</div></div>
+</div>
+
+<div class="div"></div>
+<div class="ep">
+  <h3>✏️ Saisir ma situation hebdomadaire</h3>
+  <div class="ir">
+    <div class="ig"><label>₿ Bitstack (€)</label><input type="number" id="ib" placeholder="0.00" step="0.01" min="0" inputmode="decimal"/></div>
+    <div class="ig"><label>💳 Revolut (€)</label><input type="number" id="ir2" placeholder="0.00" step="0.01" min="0" inputmode="decimal"/></div>
+    <div class="ig"><label>🏦 Compte courant (€)</label><input type="number" id="ic" placeholder="0.00" step="0.01" min="0" inputmode="decimal"/></div>
+    <div class="ig"><label>📗 Livret A (€)</label><input type="number" id="il" placeholder="0.00" step="0.01" min="0" inputmode="decimal"/></div>
+    <div class="ig full"><label>📝 Note (optionnel)</label><input type="text" id="in" placeholder="Ex: achat BTC, dépense imprévue..."/></div>
+  </div>
+  <button class="btn-sv" onclick="save()">💾 Enregistrer cette semaine</button>
+</div>
+
+<div class="div"></div>
+<div class="hs">
+  <div class="hh">
+    <h3>📅 Historique des semaines</h3>
+    <button class="btn-cl" onclick="clr()">Tout effacer</button>
+  </div>
+  <div class="hl" id="hl"><div class="es"><span>📋</span>Aucune entrée.<br>Saisis ta première situation ci-dessus !</div></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const K='fm_v4';
+function mon(d){const dt=new Date(d),dy=dt.getDay(),df=dt.getDate()-dy+(dy===0?-6:1);dt.setDate(df);return dt.toISOString().split('T')[0]}
+function fmt(v){return new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',minimumFractionDigits:2}).format(v||0)}
+function fd(s){if(!s)return'—';const[y,m,d]=s.split('-');return d+'/'+m+'/'+y}
+function setToday(){document.getElementById('wd').value=new Date().toISOString().split('T')[0];uh()}
+function uh(){const v=document.getElementById('wd').value;if(!v)return;const m=mon(v),s=new Date(m);s.setDate(s.getDate()+6);document.getElementById('hd').textContent='Semaine du '+fd(m)+' au '+fd(s.toISOString().split('T')[0])}
+function gd(){try{return JSON.parse(localStorage.getItem(K))||[]}catch{return[]}}
+function sd(d){localStorage.setItem(K,JSON.stringify(d))}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000)}
+function save(){
+  const b=parseFloat(document.getElementById('ib').value)||0;
+  const r=parseFloat(document.getElementById('ir2').value)||0;
+  const c=parseFloat(document.getElementById('ic').value)||0;
+  const l=parseFloat(document.getElementById('il').value)||0;
+  const n=document.getElementById('in').value.trim();
+  const wv=document.getElementById('wd').value;
+  if(!wv){toast('⚠️ Choisis une date !');return}
+  const w=mon(wv),data=gd(),idx=data.findIndex(e=>e.week===w);
+  const entry={week:w,b,r,c,l,n};
+  if(idx>=0)data[idx]=entry;else data.push(entry);
+  data.sort((a,z)=>z.week.localeCompare(a.week));
+  sd(data);
+  ['ib','ir2','ic','il','in'].forEach(id=>document.getElementById(id).value='');
+  toast('✅ Enregistré !');render()
+}
+function clr(){if(confirm('Effacer tout l\\'historique ? Cette action est irréversible.')){localStorage.removeItem(K);render()}}
+function render(){
+  const data=gd(),lt=data[0]||null,pv=data[1]||null;
+  const b=lt?lt.b:0,r=lt?lt.r:0,c=lt?lt.c:0,l=lt?lt.l:0,tot=b+r+c+l;
+  document.getElementById('db').textContent=fmt(b);
+  document.getElementById('dr').textContent=fmt(r);
+  document.getElementById('dc').textContent=fmt(c);
+  document.getElementById('dl').textContent=fmt(l);
+  const p=v=>tot>0?((v/tot)*100).toFixed(1)+'% du total':'0% du total';
+  document.getElementById('pb').textContent=p(b);
+  document.getElementById('pr').textContent=p(r);
+  document.getElementById('pc').textContent=p(c);
+  document.getElementById('pl').textContent=p(l);
+  document.getElementById('ta').textContent=fmt(tot);
+  const ce=document.getElementById('tc');
+  if(pv){const pt=(pv.b||0)+(pv.r||0)+(pv.c||0)+(pv.l||0),df=tot-pt;ce.className='chg '+(df>=0?'pos':'neg');ce.textContent=(df>=0?'+':'')+fmt(df)+' vs semaine précédente'}
+  else{ce.textContent=lt?'Première saisie':'—';ce.className='chg'}
+  const accs=[{id:'btc',lbl:'Bitstack',v:b},{id:'rev',lbl:'Revolut',v:r},{id:'cou',lbl:'Courant',v:c},{id:'liv',lbl:'Livret A',v:l}];
+  const mx=Math.max(...accs.map(a=>a.v),1);
+  document.getElementById('bc').innerHTML=accs.map(a=>{const pct=(a.v/mx)*100;return'<div class="br"><div class="bl">'+a.lbl+'</div><div class="bt"><div class="bf '+a.id+'" style="width:'+pct+'%">'+(pct>18?fmt(a.v):' ')+'</div></div></div>'}).join('');
+  const hl=document.getElementById('hl');
+  if(!data.length){hl.innerHTML='<div class="es"><span>📋</span>Aucune entrée.<br>Saisis ta première situation ci-dessus !</div>';return}
+  hl.innerHTML=data.map((e,i)=>{
+    const t=(e.b||0)+(e.r||0)+(e.c||0)+(e.l||0),pe=data[i+1],pt=pe?(pe.b||0)+(pe.r||0)+(pe.c||0)+(pe.l||0):null;
+    let ev='';if(pt!==null){const d=t-pt;ev=' <span class="'+(d>=0?'pos':'neg')+'" style="font-size:.72rem">'+(d>=0?'+':'')+fmt(d)+'</span>'}
+    return'<div class="hi"><div class="hw">Sem. du '+fd(e.week)+(e.n?' · '+e.n:'')+'</div><div class="ht">'+fmt(t)+ev+'</div><div class="htg"><span class="tag btc">₿ '+fmt(e.b)+'</span><span class="tag rev">💳 '+fmt(e.r)+'</span><span class="tag cou">🏦 '+fmt(e.c)+'</span><span class="tag liv">📗 '+fmt(e.l)+'</span></div></div>'
+  }).join('')
+}
+setToday();
+document.getElementById('wd').addEventListener('change',uh);
+render();
+(function(){const d=gd();if(!d.length)return;const tw=mon(new Date().toISOString().split('T')[0]);if(d[0].week===tw){document.getElementById('ib').value=d[0].b||'';document.getElementById('ir2').value=d[0].r||'';document.getElementById('ic').value=d[0].c||'';document.getElementById('il').value=d[0].l||'';document.getElementById('in').value=d[0].n||''}})();
+</script>
+</body>
+</html>
